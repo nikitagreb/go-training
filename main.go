@@ -17,12 +17,12 @@ func main() {
 }
 
 // Home is the about page handler
-func Home(w http.ResponseWriter) {
+func Home(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "home.page.tmpl")
 }
 
 // About is the about page handler
-func About(w http.ResponseWriter) {
+func About(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "about.page.tmpl")
 }
 
