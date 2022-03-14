@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 )
@@ -11,6 +12,7 @@ const portNumber string = ":8888"
 func main() {
 	http.HandleFunc("/", Home)
 	http.HandleFunc("/about", About)
+	http.HandleFunc("/divide", Divide)
 	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
 	_ = http.ListenAndServe(portNumber, nil)
 }
@@ -27,7 +29,14 @@ func About(w http.ResponseWriter, r *http.Request) {
 }
 
 func Divide(w http.ResponseWriter, r *http.Request) {
+	var x, y float32 = 100.00, 10.00
+	f, err := divideValues(x, y)
+	if err != nil {
+		fmt.Fprintf(w, "Cannot divide by 0")
+		return
+	}
 
+	fmt.Fprintf(w, fmt.Sprintf("%f divided by %f is %f", x, y, f))
 }
 
 // addValues adds two integers and return the sum
@@ -36,7 +45,10 @@ func addValues(x, y int) int {
 }
 
 func divideValues(x, y float32) (float32, error) {
+	if y <= 0 {
+		err := errors.New("Cannot divide by zero")
+		return 0, err
+	}
 	result := x / y
-
 	return result, nil
 }
