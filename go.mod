@@ -1,3 +1,3 @@
-module udemy-go-1
+module github.com/nikitagreb/go-training
 
 go 1.17
